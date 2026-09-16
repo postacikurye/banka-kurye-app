@@ -29,10 +29,6 @@ jobs:
           flutter-version: '3.19.x'
           channel: 'stable'
 
-      - name: Create Base App
-        run: |
-          flutter create . --org com.bankakurye --project-name banka_kurye
-
       - name: Build Android APK
         run: flutter build apk --release
 
