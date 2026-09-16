@@ -23,8 +23,8 @@ jobs:
           channel: 'stable'
 
       - name: Build Web Dashboard
+        working-directory: banka-kurye-app
         run: |
-          cd banka-kurye-app
           flutter pub get
           flutter build web --release --base-href "/banka-kurye-app/"
 
