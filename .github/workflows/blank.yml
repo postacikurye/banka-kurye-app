@@ -26,11 +26,17 @@ jobs:
         run: |
           find . -name "pubspec.yaml" -execdir flutter pub get \;
           find . -name "pubspec.yaml" -execdir flutter build web --release --base-href "/banka-kurye-app/" \;
+          
+      - name: Prepare Web Files
+        run: |
+          WEB_DIR=$(find . -type d -path "*/build/web" | head -n 1)
+          mkdir -p public
+          cp -r $WEB_DIR/* public/
 
       - name: Upload Web Artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: public
 
   deploy-web:
     needs: build
