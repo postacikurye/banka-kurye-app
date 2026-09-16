@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "870033517242",
+    "project_id": "postaci-kurye-7f3bc",
+    "storage_bucket": "postaci-kurye-7f3bc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870033517242:android:ec62c872528f5ed1a67083",
+        "android_client_info": {
+          "package_name": "com.bankakurye.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADBF_ylWWh4VtMqBdOIgWpWqQ4FKKJWTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
