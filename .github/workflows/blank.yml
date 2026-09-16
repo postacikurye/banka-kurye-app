@@ -48,3 +48,4 @@ jobs:
         with:
           name: Banka-Kurye-Yonetici-Web
           path: build/web/
+           
