@@ -2,26 +2,19 @@ name: Build and Deploy Banka Kurye
 
 on:
   push:
-    branches: [ main, master ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Java JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
           java-version: '17'
+          distribution: 'temurin'
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -29,34 +22,26 @@ jobs:
           flutter-version: '3.19.x'
           channel: 'stable'
 
-      - name: Build Android APK
-        run: flutter build apk --release
-
       - name: Build Web Dashboard
         run: |
           cd banka-kurye-app
+          flutter pub get
           flutter build web --release --base-href "/banka-kurye-app/"
-          
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Banka-Kurye-Mobil-APK
-          path: build/app/outputs/flutter-apk/app-release.apk
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
 
       - name: Upload Web Artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: build/web/
+          path: banka-kurye-app/build/web
 
   deploy-web:
     needs: build
-    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
