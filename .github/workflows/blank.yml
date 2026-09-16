@@ -1,0 +1,50 @@
+name: Build Banka Kurye APK and Web
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.x'
+          channel: 'stable'
+
+      - name: Create Flutter Project Structure
+        run: |
+          flutter create . --org com.bankakurye --project-name banka_kurye
+          
+          # Bağımlılıkları Ekle
+          flutter pub add firebase_core firebase_auth cloud_firestore firebase_storage google_maps_flutter geolocator url_launcher reorderables image_picker intl
+
+      - name: Build Android APK
+        run: flutter build apk --release --no-tree-shake-icons
+
+      - name: Build Web Dashboard
+        run: flutter build web --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: Banka-Kurye-Mobil-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Upload Web Dashboard
+        uses: actions/upload-artifact@v3
+        with:
+          name: Banka-Kurye-Yonetici-Web
+          path: build/web/
