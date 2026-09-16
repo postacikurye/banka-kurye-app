@@ -23,15 +23,14 @@ jobs:
           channel: 'stable'
 
       - name: Build Web Dashboard
-        working-directory: banka-kurye-app/banka-kurye-app
         run: |
-          flutter pub get
-          flutter build web --release --base-href "/banka-kurye-app/"
+          find . -name "pubspec.yaml" -execdir flutter pub get \;
+          find . -name "pubspec.yaml" -execdir flutter build web --release --base-href "/banka-kurye-app/" \;
 
       - name: Upload Web Artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: banka-kurye-app/banka-kurye-app/build/web
+          path: .
 
   deploy-web:
     needs: build
