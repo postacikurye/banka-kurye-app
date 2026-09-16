@@ -37,8 +37,9 @@ jobs:
         run: flutter build apk --release
 
       - name: Build Web Dashboard
-        run: flutter build web --release --base-href "/banka-kurye-app/"
-
+        run: cd banka-kurye-app
+          flutter build web --release --base-href "/banka-kurye-app/"
+          
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
